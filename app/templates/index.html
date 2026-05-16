@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ChurnSense · Analyse de Risque Bancaire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div class="glow glow-1" aria-hidden="true"></div>
+  <div class="glow glow-2" aria-hidden="true"></div>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#">
+        <div class="brand-mark">
+          <svg viewBox="0 0 36 36" fill="none">
+            <circle cx="18" cy="18" r="17" stroke="#c9a84c" stroke-width="1"/>
+            <path d="M10 24 L15 16 L19.5 20 L24 11" stroke="#c9a84c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="24" cy="11" r="2.2" fill="#c9a84c"/>
+          </svg>
+        </div>
+        <span class="brand-name">ChurnSense</span>
+      </a>
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        <span class="status-text">Modèle actif —</span>
+        <span class="status-model">{{ model_name }}</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-label">Intelligence Artificielle · Analyse de Risque Bancaire</div>
+      <h1 class="hero-title">
+        Prédire le<br/>
+        <em class="hero-accent">départ client</em><br/>
+        avant qu'il arrive.
+      </h1>
+      <p class="hero-desc">
+        Renseignez le profil d'un client. Notre modèle Random Forest analyse
+        les données et calcule instantanément la probabilité de quitter la banque.
+      </p>
+      <div class="hero-kpis">
+        <div class="kpi">
+          <span class="kpi-num">252k</span>
+          <span class="kpi-lbl">Clients analysés</span>
+        </div>
+        <div class="kpi-sep"></div>
+        <div class="kpi">
+          <span class="kpi-num">95.77%</span>
+          <span class="kpi-lbl">Précision du modèle</span>
+        </div>
+        <div class="kpi-sep"></div>
+        <div class="kpi">
+          <span class="kpi-num">95.13%</span>
+          <span class="kpi-lbl">ROC-AUC</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><span>Analyse de profil client</span></div>
+
+  <!-- MAIN -->
+  <main class="main-wrap">
+    <div class="form-shell" id="formCard">
+
+      <!-- Sidebar -->
+      <aside class="form-sidebar">
+        <div class="sidebar-step">
+          <div class="step-num">01</div>
+          <div class="step-info"><strong>Identité</strong><span>Profil de base</span></div>
+        </div>
+        <div class="step-line"></div>
+        <div class="sidebar-step">
+          <div class="step-num">02</div>
+          <div class="step-info"><strong>Finance</strong><span>Données bancaires</span></div>
+        </div>
+        <div class="step-line"></div>
+        <div class="sidebar-step">
+          <div class="step-num">03</div>
+          <div class="step-info"><strong>Comportement</strong><span>Activité & engagement</span></div>
+        </div>
+        <div class="sidebar-notice">
+          <svg viewBox="0 0 16 16" fill="none" width="13" height="13" style="flex-shrink:0;margin-top:2px"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1"/><path d="M8 5v4M8 11v.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Analyse locale et sécurisée. Aucune donnée sauvegardée.
+        </div>
+      </aside>
+
+      <!-- Form body -->
+      <div class="form-body">
+
+        <!-- 01 Identité -->
+        <section class="form-section">
+          <div class="fsec-head"><span class="fsec-num">01</span><h2 class="fsec-title">Identité du client</h2></div>
+          <div class="fields-grid">
+            <div class="field full">
+              <label for="client_name">Nom du client</label>
+              <input type="text" id="client_name" placeholder="ex. Jean-Marc Dupont"/>
+            </div>
+            <div class="field">
+              <label for="Geography">Pays</label>
+              <div class="sel-wrap">
+                <select id="Geography" required>
+                  <option value="" disabled selected>Sélectionnez…</option>
+                  <option value="France">🇫🇷  France</option>
+                  <option value="Germany">🇩🇪  Allemagne</option>
+                  <option value="Spain">🇪🇸  Espagne</option>
+                </select>
+                <svg class="sel-arr" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+            <div class="field">
+              <label for="Gender">Genre</label>
+              <div class="sel-wrap">
+                <select id="Gender" required>
+                  <option value="" disabled selected>Sélectionnez…</option>
+                  <option value="Homme">Homme</option>
+                  <option value="Femme">Femme</option>
+                </select>
+                <svg class="sel-arr" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+            <div class="field">
+              <label for="Age">Âge <span class="lbl-hint">18 – 100</span></label>
+              <input type="number" id="Age" placeholder="42" min="18" max="100" required/>
+            </div>
+            <div class="field">
+              <label for="Tenure">Ancienneté avec la banque <span class="lbl-hint">0 – 10 ans</span></label>
+              <input type="number" id="Tenure" placeholder="5" min="0" max="10" required/>
+            </div>
+          </div>
+        </section>
+
+        <!-- 02 Finance -->
+        <section class="form-section">
+          <div class="fsec-head"><span class="fsec-num">02</span><h2 class="fsec-title">Données financières</h2></div>
+          <div class="fields-grid">
+            <div class="field">
+              <label for="CreditScore">Score de crédit <span class="lbl-hint">300 – 850</span></label>
+              <input type="number" id="CreditScore" placeholder="650" min="300" max="850" required/>
+            </div>
+            <div class="field">
+              <label for="NumOfProducts">Nombre de produits bancaires <span class="lbl-hint">1 – 4</span></label>
+              <input type="number" id="NumOfProducts" placeholder="2" min="1" max="4" required/>
+            </div>
+            <div class="field">
+              <label for="Balance">Solde bancaire <span class="lbl-hint">EUR</span></label>
+              <div class="pfx-wrap"><span class="pfx">€</span><input type="number" id="Balance" class="has-pfx" placeholder="75 000" min="0" step="0.01" required/></div>
+            </div>
+            <div class="field">
+              <label for="EstimatedSalary">Salaire estimé <span class="lbl-hint">EUR</span></label>
+              <div class="pfx-wrap"><span class="pfx">€</span><input type="number" id="EstimatedSalary" class="has-pfx" placeholder="55 000" min="0" step="0.01" required/></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 03 Comportement -->
+        <section class="form-section">
+          <div class="fsec-head"><span class="fsec-num">03</span><h2 class="fsec-title">Comportement & engagement</h2></div>
+          <div class="fields-grid">
+            <div class="field full">
+              <label>Possède une carte de crédit</label>
+              <div class="tog-group">
+                <label class="tog-opt"><input type="radio" name="HasCrCard" value="1"/>
+                  <span class="tog-face">
+                    <svg viewBox="0 0 18 18" fill="none" width="15"><rect x="2" y="5" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 8h14" stroke="currentColor" stroke-width="1.3"/></svg>
+                    Oui
+                  </span>
+                </label>
+                <label class="tog-opt"><input type="radio" name="HasCrCard" value="0" checked/>
+                  <span class="tog-face">
+                    <svg viewBox="0 0 18 18" fill="none" width="15"><path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                    Non
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="field full">
+              <label>Client actif</label>
+              <div class="tog-group">
+                <label class="tog-opt"><input type="radio" name="IsActiveMember" value="1" checked/>
+                  <span class="tog-face">
+                    <svg viewBox="0 0 18 18" fill="none" width="15"><circle cx="9" cy="9" r="6.5" stroke="currentColor" stroke-width="1.3"/><circle cx="9" cy="9" r="2.5" fill="currentColor"/></svg>
+                    Oui, client actif
+                  </span>
+                </label>
+                <label class="tog-opt"><input type="radio" name="IsActiveMember" value="0"/>
+                  <span class="tog-face">
+                    <svg viewBox="0 0 18 18" fill="none" width="15"><circle cx="9" cy="9" r="6.5" stroke="currentColor" stroke-width="1.3"/></svg>
+                    Non, client inactif
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="form-submit-row">
+          <p class="submit-note"> Modèle Random Forest </p>
+          <button type="button" id="submitBtn" onclick="submitPrediction()">
+            <span class="btn-label">Lancer l'analyse</span>
+            <svg class="btn-arr" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+      </div>
+    </div><!-- /form-shell -->
+
+    <!-- ══ RESULT ══════════════════════════════════════════════════════════ -->
+    <div class="result-shell" id="resultCard" style="display:none;">
+
+      <!-- Result header -->
+      <div class="result-header">
+        <div class="result-header-row">
+          <div>
+            <div class="result-eyebrow">Résultat de prédiction</div>
+            <div class="result-title" id="verdictLabel">—</div>
+          </div>
+          <button class="close-btn" onclick="resetForm()" aria-label="Nouvelle analyse">
+            <svg viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Info grid -->
+      <div class="result-info-grid">
+
+        <!-- Client block -->
+        <div class="info-block">
+          <div class="info-block-title">Informations client</div>
+          <div class="info-row">
+            <span class="info-label">Nom du client</span>
+            <span class="info-value" id="resultName">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Classe prédite</span>
+            <span class="info-value info-class" id="predClass">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Prédiction</span>
+            <span class="info-value info-pred" id="predLabel">—</span>
+          </div>
+        </div>
+
+        <!-- Model block -->
+        <div class="info-block">
+          <div class="info-block-title">Informations du modèle</div>
+          <div class="info-row">
+            <span class="info-label">Modèle utilisé</span>
+            <span class="info-value" id="resultModel">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Précision</span>
+            <span class="info-value" id="resultAccuracy">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">ROC-AUC</span>
+            <span class="info-value" id="resultRocAuc">—</span>
+          </div>
+        </div>
+
+        <!-- Probability block -->
+        <div class="info-block prob-block">
+          <div class="info-block-title">Probabilité de quitter</div>
+          <div class="prob-display">
+            <div class="prob-number" id="probValue">—</div>
+            <div class="prob-tier-badge" id="probTierBadge">—</div>
+          </div>
+          <div class="prob-bar-track">
+            <div class="prob-bar-fill" id="probBar"></div>
+          </div>
+          <div class="prob-range-labels"><span>0%</span><span>50%</span><span>100%</span></div>
+        </div>
+
+      </div><!-- /result-info-grid -->
+
+      <!-- Explanation -->
+      <div class="explanation-block">
+        <svg viewBox="0 0 20 20" fill="none" width="17" style="flex-shrink:0;margin-top:1px;color:var(--gold-400)"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.3"/><path d="M10 6v5M10 13.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div>
+          <div class="exp-main" id="expMain">—</div>
+          <div class="exp-detail">
+            Cette probabilité représente la chance estimée que le client quitte la banque selon le modèle Random Forest.
+          </div>
+        </div>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn-ghost" onclick="resetForm()">
+          <svg viewBox="0 0 16 16" fill="none" width="14"><path d="M12 8H4M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Nouvelle analyse
+        </button>
+      </div>
+    </div><!-- /result-shell -->
+
+    <div class="toast" id="errorToast" role="alert"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="footer-brand">ChurnSense</span>
+      <span class="footer-dot">·</span>
+      <span>Machine Learning · OFPPT Intelligence Artificielle</span>
+      <span class="footer-dot">·</span>
+      <span>Random Forest </span>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
