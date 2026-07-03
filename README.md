@@ -8,7 +8,6 @@ ChurnSense is a Flask-based machine learning web application that predicts wheth
 - Flask JSON API endpoint for inference
 - Pre-trained Random Forest model artifacts
 - Feature engineering aligned with the training notebook
-- Clean ML project structure for GitHub portfolios
 - Render-ready deployment configuration
 - Health check endpoint for deployment monitoring
 
